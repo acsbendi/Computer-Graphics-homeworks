@@ -6,6 +6,10 @@
 #define DODGE_THE_TIRE_CAMERA_HPP
 
 #include <memory>
+#include "animatable.hpp"
+#include "utils.hpp"
+#include "collisiondetector.hpp"
+#include "racetrack.hpp"
 
 using std::unique_ptr;
 

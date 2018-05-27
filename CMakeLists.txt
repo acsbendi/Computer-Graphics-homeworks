@@ -46,9 +46,34 @@ find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
 link_directories(${OpenGL_LIBRARY_DIRS})
 
-include_directories("Dodge the tire/include")
+target_include_directories(dodge_the_tire PRIVATE "Dodge the tire/include")
 
 target_link_libraries(dodge_the_tire ${GLUT_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
 
 set(CMAKE_EXE_LINKER_FLAGS "-lglut32 -lopengl32")
-#-Wl,--subsystem,windows
+
+project(butterfly)
+
+set(CMAKE_CXX_FLAGS "-static -static-libgcc -static-libstdc++")
+
+add_executable(butterfly Butterfly/src/main.cpp Butterfly/include/camera.hpp Butterfly/include/catmullrom.hpp Butterfly/src/butterfly.cpp Butterfly/include/butterfly.hpp Butterfly/src/catmullrom.cpp Butterfly/include/utils.hpp Butterfly/src/camera.cpp Butterfly/include/physics.hpp Butterfly/include/butterfly_body.hpp Butterfly/src/butterfly_body.cpp Butterfly/include/butterfly_wing.hpp Butterfly/src/butterfly_wing.cpp Butterfly/include/opengl.hpp Butterfly/include/cursor.hpp Butterfly/src/physics.cpp Butterfly/include/flowermanager.hpp Butterfly/src/flowermanager.cpp Butterfly/include/flower.hpp Butterfly/src/flower.cpp Butterfly/include/petals.hpp Butterfly/src/petals.cpp Butterfly/include/circle.hpp Butterfly/src/circle.cpp)
+
+list(APPEND CMAKE_PREFIX_PATH "D:/Development/glew-2.1.0")
+list(APPEND CMAKE_PREFIX_PATH "D:/Development/freeglut")
+
+find_package(GLEW REQUIRED STATIC)
+include_directories(${GLEW_INCLUDE_DIRS})
+link_libraries(${GLEW_LIBRARIES})
+
+find_package(GLUT REQUIRED)
+include_directories(${GLUT_INCLUDE_DIR})
+link_libraries(${GLUT_LIBRARIES})
+
+find_package(OpenGL REQUIRED)
+include_directories(${OpenGL_INCLUDE_DIRS})
+link_directories(${OpenGL_LIBRARY_DIRS})
+
+target_include_directories(butterfly PRIVATE "Butterfly/include")
+
+target_link_libraries(butterfly ${GLUT_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
+
