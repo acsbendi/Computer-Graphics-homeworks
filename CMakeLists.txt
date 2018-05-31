@@ -77,3 +77,22 @@ target_include_directories(butterfly PRIVATE "Butterfly/include")
 
 target_link_libraries(butterfly ${GLUT_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
 
+project(fish_tank)
+
+add_executable(fish_tank "Fish Tank/src/main.cpp" "Fish Tank/include/scene.hpp" "Fish Tank/include/utils.hpp" "Fish Tank/src/scene.cpp" "Fish Tank/include/material.hpp" "Fish Tank/include/gold.hpp" "Fish Tank/include/glass.hpp" "Fish Tank/src/gold.cpp" "Fish Tank/src/glass.cpp" "Fish Tank/src/material.cpp" "Fish Tank/include/hit.hpp" "Fish Tank/include/ray.hpp" "Fish Tank/src/ray.cpp" "Fish Tank/include/intersectable.hpp" "Fish Tank/src/intersectable.cpp" "Fish Tank/include/goldenthing.hpp" "Fish Tank/src/goldenthing.cpp" "Fish Tank/include/wall.hpp" "Fish Tank/include/paraboloid.hpp" "Fish Tank/include/room.hpp" "Fish Tank/include/light.hpp" "Fish Tank/include/fisheyecamera.hpp" "Fish Tank/include/camera.hpp" "Fish Tank/include/paraboloidfishtank.hpp" "Fish Tank/include/rectangularfishtank.hpp" "Fish Tank/include/fishtank.hpp" "Fish Tank/include/normalcamera.hpp" "Fish Tank/src/camera.cpp" "Fish Tank/src/room.cpp" "Fish Tank/src/wall.cpp" "Fish Tank/src/fisheyecamera.cpp" "Fish Tank/src/rectangularfishtank.cpp" "Fish Tank/src/paraboloidfishtank.cpp" "Fish Tank/src/paraboloid.cpp" "Fish Tank/src/normalcamera.cpp" "Fish Tank/src/light.cpp")
+
+find_package(GLEW REQUIRED)
+include_directories(${GLEW_INCLUDE_DIRS})
+link_libraries(${GLEW_LIBRARIES})
+
+find_package(GLUT REQUIRED)
+include_directories(${GLUT_INCLUDE_DIR})
+link_libraries(${GLUT_LIBRARIES})
+
+find_package(OpenGL REQUIRED)
+include_directories(${OpenGL_INCLUDE_DIRS})
+link_directories(${OpenGL_LIBRARY_DIRS})
+
+target_include_directories(fish_tank PRIVATE "Fish Tank/include")
+
+target_link_libraries(fish_tank ${GLUT_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
