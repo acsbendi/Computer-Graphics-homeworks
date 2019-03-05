@@ -15,14 +15,13 @@ using std::make_unique;
 
 Scene::Scene(int startX, int startY, int endX, int endY, unsigned int windowWidth,
              unique_ptr<Camera> camera, unique_ptr<FishTank> fishTank) :
-        startX(startX), startY(startY), endX(endX), endY(endY), windowWidth(windowWidth), camera(move(camera)) {
+        startX(startX), startY(startY), endX(endX), endY(endY), windowWidth(windowWidth), camera(move(camera)), La{0.1f, 0.1f, 0.1f}
+{
     this->camera->set(endX - startX,endY - startY);
     objects.push_back(move(fishTank));
-    MAX_DEPTH = 3;
 }
 
 void Scene::build() {
-    La = vec3(0.1f, 0.1f, 0.1f);
     lights.push_back(make_unique<Light>(vec3(-1, -1, -1), vec3(3, 3, 3)));
     lights.push_back(make_unique<Light>(vec3(1, 1, 1), vec3(1, 4.5f, 4.0f)));
 

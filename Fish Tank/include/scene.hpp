@@ -21,12 +21,12 @@ class FishTank;
 
 class Scene {
     const unsigned int windowWidth;
-    int startX, startY, endX, endY;
+    const int startX, startY, endX, endY;
     vector<unique_ptr<Intersectable>> objects;
     vector<unique_ptr<Light>> lights;
     unique_ptr<Camera> camera;
     vec3 La;
-    int MAX_DEPTH;
+    static constexpr int MAX_DEPTH = 4;
 
 public:
     Scene(int startX, int startY, int endX, int endY, unsigned int windowWidth,
