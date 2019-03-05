@@ -5,7 +5,10 @@
 #ifndef DODGE_THE_TIRE_TIRETEXTURE_HPP
 #define DODGE_THE_TIRE_TIRETEXTURE_HPP
 
+#include <vector>
 #include "texture.hpp"
+
+using std::vector;
 
 //---------------------------
 class TireTexture : public Texture{

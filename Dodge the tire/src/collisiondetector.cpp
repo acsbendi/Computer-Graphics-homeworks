@@ -3,17 +3,14 @@
 //
 
 #include "collisiondetector.hpp"
+#include "tire.hpp"
 
- CollisionDetector::CollisionDetector(unsigned int numberOfLanes){
-    laneObjectPositions = vector<vec2>(numberOfLanes, vec2(0.0f,0.0f));
-}
+CollisionDetector::CollisionDetector(unsigned int numberOfLanes, const vector<const Tire*> tires)
+        : tires{tires} {}
 
 
-bool CollisionDetector::CheckCollision(unsigned int lane, float position) const {
-    return laneObjectPositions[lane].x < position && laneObjectPositions[lane].y > position;
-}
-
-void CollisionDetector::ReportCurrentPosition(unsigned int lane, vec2 position){
-    laneObjectPositions[lane] = position;
+bool CollisionDetector::CheckCollision(unsigned int lane, vec2 position) const {
+    vec2 tirePosition = tires[lane]->GetPositionOnTrack(position.y);
+    return tirePosition.x < position.x && position.x < tirePosition.y;
 }
 

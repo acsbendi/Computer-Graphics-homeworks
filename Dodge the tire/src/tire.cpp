@@ -4,7 +4,6 @@
 
 #include <memory>
 #include "racetrack.hpp"
-#include "collisiondetector.hpp"
 #include "torus.hpp"
 #include "tiretexture.hpp"
 #include "shader.hpp"
@@ -14,10 +13,9 @@
 using std::shared_ptr;
 using std::make_shared;
 
-Tire::Tire(shared_ptr<Shader> shader, const RaceTrack &raceTrack, unsigned lane, float uStart,
-           CollisionDetector &collisionDetector) :
+Tire::Tire(shared_ptr<Shader> shader, const RaceTrack &raceTrack, unsigned lane, float uStart) :
         Object(shader, make_shared<Material>(), make_shared<TireTexture>(R, r, 900, 900), make_shared<Torus>(R, r)),
-        raceTrack(raceTrack), lane(lane), uStart(uStart), collisionDetector(collisionDetector) {
+        raceTrack(raceTrack), lane(lane), uStart(uStart){
     material->kd = vec3(0.1f, 0.1f, 0.1f);
     material->ks = vec3(2, 2, 2);
     material->ka = vec3(0.2f, 0.2f, 0.2f);
@@ -35,9 +33,6 @@ void Tire::Animate(float tstart, float tend) {
 
     float currentR = R * scale.x;
     float currentr = r * scale.x;
-
-    collisionDetector.ReportCurrentPosition(lane,
-                                            vec2(u - (currentR + currentr) * 0.1f, u + (currentR + currentr) * 0.1f));
 
     translation = spd.position + spd.normal * (currentR + currentr);
     vec4 itrans(-spd.tangentU, 0);
@@ -62,4 +57,10 @@ mat4 Tire::GetMinv() const {
 
 void Tire::StartAcceleration() {
     canAccelerate = true;
+}
+
+vec2 Tire::GetPositionOnTrack(float height) const{
+    float currentRadius = R * scale.x + r * scale.x;
+
+    return vec2(u - (currentRadius) * 0.1f, u + (currentRadius) * 0.1f);
 }

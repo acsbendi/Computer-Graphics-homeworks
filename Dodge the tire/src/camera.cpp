@@ -12,7 +12,7 @@ using std::unique_ptr;
 using std::move;
 
 Camera::Camera(const RaceTrack& raceTrack, const vec3& wEye, const vec3& wLookat,
-       const vec3& wVup, unique_ptr<CollisionDetector>& collisionDetector, const unsigned int& windowWidth, const unsigned int& windowHeight)
+       const vec3& wVup, unique_ptr<CollisionDetector> collisionDetector, const unsigned int& windowWidth, const unsigned int& windowHeight)
         : raceTrack(raceTrack), wEye(wEye), wLookat(wLookat), wVup(wVup), collisionDetector(move(collisionDetector)),
           windowWidth(windowWidth), windowHeight(windowHeight){
     asp = 1;
@@ -54,7 +54,7 @@ void Camera::Animate(float tstart, float tend) {
         SurfacePointData spd = raceTrack.GetData(u,lane);
 
         if(shakingEffectDuration - shakingEffectRemainingTime > shakingEffectStart &&
-           collisionDetector->CheckCollision(lane, u)){
+           collisionDetector->CheckCollision(lane, vec2{u, distanceFromSurface})){
             shakingEffectRemainingTime = shakingEffectDuration;
         }
 

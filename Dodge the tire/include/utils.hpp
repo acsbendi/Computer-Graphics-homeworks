@@ -13,14 +13,14 @@
 struct vec2 {
 //---------------------------
     float x, y;
-    vec2(float _x = 0, float _y = 0) { x = _x; y = _y; }
+    explicit vec2(float _x = 0, float _y = 0) { x = _x; y = _y; }
 };
 
 //---------------------------
 struct vec3 {
 //---------------------------
     float x, y, z;
-    vec3(float _x = 0, float _y = 0, float _z = 0) { x = _x; y = _y; z = _z; }
+    explicit vec3(float _x = 0, float _y = 0, float _z = 0) { x = _x; y = _y; z = _z; }
     vec3 operator*(float a) const { return vec3(x * a, y * a, z * a); }
     vec3 operator+(const vec3& v) const { return vec3(x + v.x, y + v.y, z + v.z); }
     vec3 operator-(const vec3& v) const { return vec3(x - v.x, y - v.y, z - v.z); }
@@ -50,8 +50,8 @@ struct mat4;
 struct vec4 {
 //---------------------------
     float x, y, z, w;
-    vec4(float _x = 0, float _y = 0, float _z = 0, float _w = 1) { x = _x; y = _y; z = _z; w = _w; }
-    vec4(vec3 v, float w = 1) : w(w){
+    explicit vec4(float _x = 0, float _y = 0, float _z = 0, float _w = 1) { x = _x; y = _y; z = _z; w = _w; }
+    explicit vec4(vec3 v, float w = 1) : w(w){
         x = v.x;
         y = v.y;
         z = v.z;
@@ -75,7 +75,7 @@ struct mat4 { // row-major matrix 4x4
 //---------------------------
     float m[4][4];
 public:
-    mat4() {}
+    mat4() = default;
     mat4(float m00, float m01, float m02, float m03,
          float m10, float m11, float m12, float m13,
          float m20, float m21, float m22, float m23,
@@ -94,7 +94,7 @@ public:
     }
 
     inline mat4 operator*(const mat4& right) {
-        mat4 result;
+        mat4 result{};
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 result.m[i][j] = 0;

@@ -10,19 +10,18 @@
 
 using std::vector;
 
+class Tire;
+
 //---------------------------
 class CollisionDetector{
 //---------------------------
 private:
-    vector<vec2> laneObjectPositions;
-    //TODO implement pull model and improve precision by checking height
+    const vector<const Tire*> tires;
 
 public:
-    explicit CollisionDetector(unsigned int numberOfLanes);
+    explicit CollisionDetector(unsigned int numberOfLanes,vector<const Tire*> tires);
 
-    bool CheckCollision(unsigned int lane, float position) const;
-
-    void ReportCurrentPosition(unsigned int lane, vec2 position);
+    bool CheckCollision(unsigned int lane, vec2 position) const;
 };
 
 #endif //DODGE_THE_TIRE_COLLISIONDETECTOR_HPP

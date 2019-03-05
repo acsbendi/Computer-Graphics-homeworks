@@ -38,7 +38,7 @@ class Camera : public Animatable { // 3D camera
 
 public:
     Camera(const RaceTrack&, const vec3&, const vec3&,
-           const vec3&, unique_ptr<CollisionDetector>&, const unsigned int&, const unsigned int&);
+           const vec3&, unique_ptr<CollisionDetector>, const unsigned int&, const unsigned int&);
 
     mat4 V();
 

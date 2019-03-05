@@ -3,6 +3,7 @@
 //
 
 #include <memory>
+#include <algorithm>
 #include "scene.hpp"
 #include "utils.hpp"
 #include "shader.hpp"
@@ -21,6 +22,7 @@
 using std::shared_ptr;
 using std::make_shared;
 using std::make_unique;
+using std::for_each;
 
 void Scene::Build() {
     // Shaders
@@ -47,18 +49,23 @@ void Scene::Build() {
 
 
     unique_ptr<RaceTrack> raceTrack = make_unique<RaceTrack>(phongShader, material0);
-    unique_ptr<CollisionDetector> collisionDetector = make_unique<CollisionDetector>(raceTrack->GetNumberOfLanes());
 
     for(unsigned int i = 0; i < raceTrack->GetNumberOfLanes(); i++){
-        unique_ptr<Tire> tire = make_unique<Tire>(phongShader,*raceTrack,i,static_cast<float>(i)/5,*collisionDetector);
+        unique_ptr<Tire> tire = make_unique<Tire>(phongShader,*raceTrack,i,static_cast<float>(i)/5);
         tire->scale = vec3(0.2f, 0.2f, 0.2f);
         tires.push_back(tire.get());
         animatables.push_back(tire.get());
         objects.push_back(move(tire));
     }
 
+    vector<const Tire*> tiresCopy;
+
+    for_each(tires.begin(),tires.end(),[&](Tire* tire){ tiresCopy.push_back(tire); });
+
+    unique_ptr<CollisionDetector> collisionDetector = make_unique<CollisionDetector>(raceTrack->GetNumberOfLanes(),tiresCopy);
+
     // Camera
-    camera = make_unique<Camera>(*raceTrack,vec3(0,0,3),vec3(0,0,0),vec3(0,1,0),collisionDetector,windowWidth,windowHeight);
+    camera = make_unique<Camera>(*raceTrack,vec3(0,0,3),vec3(0,0,0),vec3(0,1,0),move(collisionDetector),windowWidth,windowHeight);
     objects.push_back(move(raceTrack));
     objects.push_back(move(spaceBackground));
     animatables.push_back(camera.get());
